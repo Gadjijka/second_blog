@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseNotFound, Http404, HttpResponsePermanentRedirect
 from django.urls import reverse, reverse_lazy
@@ -34,6 +34,7 @@ class AddPage(LoginRequiredMixin, DataMixin, CreateView):
     template_name = 'women/addpage.html'
     success_url = reverse_lazy('home')
     title_page = 'Добавление статьи'
+#    permission_required = 'women.add_women'
 
     def form_valid(self, form):
         w = form.save(commit=False)
@@ -45,7 +46,8 @@ class UpdatePage(DataMixin, UpdateView):
     fields = ['title', 'content', 'photo', 'is_published', 'cat']
     template_name = 'women/addpage.html'
     success_url = reverse_lazy('home')
-    title_page = 'Реда'
+    title_page = 'Редактирование'
+#    permission_required = 'women.change_women'
 
 class DeletePage(DeleteView):
     model = Women
